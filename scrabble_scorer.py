@@ -10,7 +10,19 @@ old_point_structure = {
   8: ['J', 'X'],
   10: ['Q', 'Z']
 }
-
+simple_point_structure = {
+  1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
+  1: ['D', 'G'],
+  1: ['B', 'C', 'M', 'P'],
+  1: ['F', 'H', 'V', 'W', 'Y'],
+  1: ['K'],
+  1: ['J', 'X'],
+  1: ['Q', 'Z']
+}
+vowel_bonus_point_structure = {
+    1: ['B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Z'],
+    3: ['A','E','I','O','U','Y']
+}
 def old_scrabble_scorer(word):
     word = word.upper()
     letterPoints = ""
@@ -34,16 +46,36 @@ def initial_prompt():
 
 
 
-def simple_scorer():
-   return 
+def simple_scorer(word):
+    word = word.upper()
+    letterPoints = ""
 
-def vowel_bonus_scorer():
-    return 
+    for char in word:
+
+        for point_value in simple_point_structure:
+
+            if char in simple_point_structure[point_value]:
+                letterPoints += 'Points for {char}: {point_value}\n'.format(char = char, point_value = point_value)
+
+    return letterPoints
+
+def vowel_bonus_scorer(word):
+    word = word.upper()
+    letterPoints = ""
+
+    for char in word:
+
+        for point_value in vowel_bonus_point_structure:
+
+            if char in vowel_bonus_point_structure[point_value]:
+                letterPoints += 'Points for {char}: {point_value}\n'.format(char = char, point_value = point_value)
+
+    return letterPoints
 
 def scrabble_scorer():
     return
 
-scoring_algorithms = ()
+scoring_algorithms = ({'Name':'Simple Score','Description': 'Each letter is worth 1 point.','Score Function':'A function with a parameter for user input that returns a score.'},{'Name':'Bonus Vowels','Description': 'Vowels are 3 pts, consonants are 1 pt.','Score Function':'A function that returns a score based on the number of vowels and consonants.'},{'Name':'Scrabble','Description': 'The traditional scoring algorithm.','Score Function':'Uses the old_scrabble_scorer() function to determine the score for a given word.'})
 
 def scorer_prompt():
     return 
