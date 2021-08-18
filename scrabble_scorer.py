@@ -47,17 +47,16 @@ def initial_prompt():
 
 
 def simple_scorer(word):
+    #print(word)
     word = word.upper()
-    letterPoints = ""
-
+    letterPoints = 0
+    
     for char in word:
-
-        for point_value in simple_point_structure:
-
-            if char in simple_point_structure[point_value]:
-                letterPoints += 'Points for {char}: {point_value}\n'.format(char = char, point_value = point_value)
+        letterPoints+=1
+    
 
     return letterPoints
+
 
 def vowel_bonus_scorer(word):
     word = word.upper()
@@ -75,19 +74,19 @@ def vowel_bonus_scorer(word):
 def scrabble_scorer():
     return
 
-scoring_algorithms = ({'Name':'Simple Score','Description': 'Each letter is worth 1 point.',"scorer_function":simple_scorer()},{'Name':'Bonus Vowels','Description': 'Vowels are 3 pts, consonants are 1 pt.',"scorer_function":vowel_bonus_scorer()},{'Name':'Scrabble','Description': 'The traditional scoring algorithm.',"scorer_function":old_scrabble_scorer()})
+scoring_algorithms = ({'Name':'Simple Score','Description': 'Each letter is worth 1 point.',"scorer_function":simple_scorer},{'Name':'Bonus Vowels','Description': 'Vowels are 3 pts, consonants are 1 pt.',"scorer_function":vowel_bonus_scorer},{'Name':'Scrabble','Description': 'The traditional scoring algorithm.',"scorer_function":old_scrabble_scorer})
 
-def scorer_prompt(word):
+def scorer_prompt():
     print('Which scoring algorithm would you like to use?\n0 -' + scoring_algorithms[0]['Name'] + scoring_algorithms[0]['Description'] + '\n1 - ' + scoring_algorithms[1]['Name'] + scoring_algorithms[1]['Description'] + '\n2 - ' + scoring_algorithms[2]['Name'] + scoring_algorithms[2]['Description'])
-    scorer_choice  = input('Enter 0, 1, or 2:')
-    scorer_choice= int(scorer_choice)
-    scoring_function = scoring_algorithms[scorer_choice]["scorer_function"]
-    return scoring_function(word)
+    scorer_choice  = int(input('Enter 0, 1, or 2:'))
+    scoring_function = (scoring_algorithms[scorer_choice])
+    return scoring_function
 
 def transform():
     return
 
 def run_program():
     word = initial_prompt()
-    score = scorer_prompt(word)
-    print.__format__(score)
+    score_algorithm = scorer_prompt()
+    score = score_algorithm["scorer_function"](word)
+    print(score)
