@@ -71,10 +71,15 @@ def vowel_bonus_scorer(word):
 
     return letterPoints
 
-def scrabble_scorer():
-    return
+def scrabble_scorer(word):
+    score = 0
 
-scoring_algorithms = ({'Name':'Simple Score','Description': 'Each letter is worth 1 point.',"scorer_function":simple_scorer},{'Name':'Bonus Vowels','Description': 'Vowels are 3 pts, consonants are 1 pt.',"scorer_function":vowel_bonus_scorer},{'Name':'Scrabble','Description': 'The traditional scoring algorithm.',"scorer_function":old_scrabble_scorer})
+    for letter in word.lower():
+        if letter in new_point_structure:
+            score += new_point_structure[letter]
+    return score
+
+scoring_algorithms = ({'Name':'Simple Score','Description': 'Each letter is worth 1 point.',"scorer_function":simple_scorer},{'Name':'Bonus Vowels','Description': 'Vowels are 3 pts, consonants are 1 pt.',"scorer_function":vowel_bonus_scorer},{'Name':'Scrabble','Description': 'The traditional scoring algorithm.',"scorer_function":scrabble_scorer})
 
 def scorer_prompt():
     print('Which scoring algorithm would you like to use?\n0 -' + scoring_algorithms[0]['Name'] + scoring_algorithms[0]['Description'] + '\n1 - ' + scoring_algorithms[1]['Name'] + scoring_algorithms[1]['Description'] + '\n2 - ' + scoring_algorithms[2]['Name'] + scoring_algorithms[2]['Description'])
@@ -82,8 +87,18 @@ def scorer_prompt():
     scoring_function = (scoring_algorithms[scorer_choice])
     return scoring_function
 
-def transform():
-    return
+def transform(dict):
+    new_dict = {}
+
+    for (key, value) in dict.items():
+        for letter in value:
+            new_dict[letter.lower()] = key
+    
+            
+    return new_dict
+
+new_point_structure = transform(old_point_structure)
+
 
 def run_program():
     word = initial_prompt()
